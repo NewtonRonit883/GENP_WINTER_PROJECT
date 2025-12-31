@@ -10,7 +10,7 @@ public class StoneLayerHandler : BlockLayerHandler
     [SerializeField]
     private NoiseSettings stoneNoiseSettings;
 
-    public DomainWarping stoneDoaminWarping;
+    public DomainWarping stoneDomainWarping;
 
     protected override bool TryHandling(ChunkData chunkData, int x, int y, int z, int surfaceHeightNoise, Vector2Int mapSeedOffset)
     {
@@ -18,7 +18,7 @@ public class StoneLayerHandler : BlockLayerHandler
             return false;
 
         stoneNoiseSettings.worldOffset = mapSeedOffset;
-        float stoneNoise = stoneDoaminWarping.GenerateDoaminNoise(chunkData.worldPosition.x + x, chunkData.worldPosition.z + z, stoneNoiseSettings);
+        float stoneNoise = stoneDomainWarping.GenerateDoaminNoise(chunkData.worldPosition.x + x, chunkData.worldPosition.z + z, stoneNoiseSettings);
 
         int endPosition = surfaceHeightNoise;
         if (chunkData.worldPosition.y < 0)

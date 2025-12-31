@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613a7fb7c395317449c645ea871190e8, type: 3}
   m_Name: NoiseSettingDomainX
   m_EditorClassIdentifier: 
-  noiseZoom: 0.01
+  noiseZoom: 0.03
   octaves: 3
   offset: {x: 600, y: 350}
   worldOffset: {x: 0, y: 0}
-  persistence: 0.5
+  persistence: 1.44
   redistributionModifier: 1.2
   exponent: 5
