@@ -60,7 +60,7 @@ public static class Chunk {
         return x + chunkData.chunkSize * y + chunkData.chunkSize * chunkData.chunkHeight * z;
     }
 
-    public static Vector3Int GetInChunkCoordinates(ChunkData chunkData, Vector3Int pos) {
+    public static Vector3Int GetPositionInChunkCoordinates(ChunkData chunkData, Vector3Int pos) {
         return new Vector3Int {
             x = pos.x - chunkData.worldPosition.x,
             y = pos.y - chunkData.worldPosition.y,
@@ -70,7 +70,21 @@ public static class Chunk {
 
     public static MeshData GetChunkMeshData(ChunkData chunkData) {
         MeshData meshData = new MeshData(true);
+
+        LoopThroughTheBlocks(chunkData, (x,y,z) => meshData = BlockHelper.GetMeshData(chunkData, x, y, z, meshData, chunkData.blocks[GetIndexFromPosition(chunkData,x,y,z)]));
+
         return meshData;
+    }
+
+    public static Vector3Int ChunkPositionFromBlockCoordinates(World world, int x, int y, int z)
+    {
+        Vector3Int pos = new Vector3Int
+        {
+            x = Mathf.FloorToInt(x/(float)world.chunkSize) * world.chunkSize,
+            y = Mathf.FloorToInt(y/(float)world.chunkHeight) * world.chunkHeight,
+            z = Mathf.FloorToInt(z/(float)world.chunkSize) * world.chunkSize
+        };
+        return pos;
     }
 
 }

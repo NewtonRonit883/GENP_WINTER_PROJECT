@@ -14,7 +14,13 @@ public enum BlockType
     TreeTrunk,
     TreeLeaves,
     Water,
-    Sand
+    Sand,
+
+    Snow,
+    Ice,
+
+    Snow_Dirt,
+    Snow_Stone
 
 }
 
