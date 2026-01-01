@@ -30,6 +30,7 @@ public class ChunkRenderer : MonoBehaviour {
         meshFilter = GetComponent<MeshFilter>();
         meshCollider = GetComponent<MeshCollider>();
         mesh = meshFilter.mesh;
+
     }
 
     public void InitializeChunk(ChunkData data) {
