@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noiseZoom: 0.03
   octaves: 1
-  offset: {x: -3200, y: 100}
+  offset: {x: -3200, y: 120}
   worldOffset: {x: 0, y: 0}
   persistence: 0.3
   redistributionModifier: 0.9
