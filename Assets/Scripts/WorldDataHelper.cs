@@ -66,4 +66,36 @@ public static class WorldDataHelper {
             .OrderBy(pos => Vector3.Distance(playerPosition, pos))
             .ToList();
     }
+
+    internal static List<Vector3Int> GetUnneededData(World.WorldData worldData, List<Vector3Int> allChunkDataPositionsNeeded) {
+        return worldData.chunkDataDictionary.Keys
+    .Where(pos => allChunkDataPositionsNeeded.Contains(pos) == false && worldData.chunkDataDictionary[pos].modifiedByThePlayer == false)
+    .ToList();
+
+    }
+
+    internal static List<Vector3Int> GetUnneededChunks(World.WorldData worldData, List<Vector3Int> allChunkPositionsNeeded) {
+        List<Vector3Int> positionToRemove = new List<Vector3Int>();
+        foreach (var pos in worldData.chunkDictionary.Keys
+            .Where(pos => allChunkPositionsNeeded.Contains(pos) == false)) {
+            if (worldData.chunkDictionary.ContainsKey(pos)) {
+                positionToRemove.Add(pos);
+
+            }
+        }
+
+        return positionToRemove;
+    }
+
+    internal static void RemoveChunk(World world, Vector3Int pos) {
+        ChunkRenderer chunk = null;
+        if (world.worldData.chunkDictionary.TryGetValue(pos, out chunk)) {
+            world.RemoveChunk(chunk);
+            world.worldData.chunkDictionary.Remove(pos);
+        }
+    }
+
+    internal static void RemoveChunkData(World world, Vector3Int pos) { 
+        world.worldData.chunkDataDictionary.Remove(pos);
+    }
 }
