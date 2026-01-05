@@ -1042,8 +1042,7 @@ MonoBehaviour:
   domainWarping: {fileID: 1210171062}
   useDomainWarping: 1
   startLayerHandler: {fileID: 881588371}
-  additionalLayerHandlers:
-  - {fileID: 1771166350}
+  additionalLayerHandlers: []
 --- !u!114 &1210171062
 MonoBehaviour:
   m_ObjectHideFlags: 0
