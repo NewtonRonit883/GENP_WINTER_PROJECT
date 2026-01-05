@@ -974,8 +974,7 @@ MonoBehaviour:
   domainWarping: {fileID: 1210171062}
   useDomainWarping: 1
   startLayerHandler: {fileID: 881588371}
-  additionalLayerHandlers:
-  - {fileID: 1771166350}
+  additionalLayerHandlers: []
 --- !u!114 &1210171062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1517,8 +1516,7 @@ MonoBehaviour:
   mapSizeInChunks: 6
   chunkSize: 16
   chunkHeight: 128
-  waterThreshold: 50
-  noiseScale: 0.03
+  chunkDrawingRange: 4
   chunkPrefab: {fileID: 4648916467254577538, guid: dd80b5a049e99ed4db60888a471a61d1,
     type: 3}
   mapSeedOffset: {x: 0, y: 0}
