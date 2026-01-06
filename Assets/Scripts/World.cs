@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,8 +29,20 @@ public class World : MonoBehaviour {
     }
 
     public void GenerateWorld() {
+        GenerateWorld(Vector3Int.zero);
+    }
 
-        WorldGenerationData worldGenerationData = GetPositionsThatPlayerSees(Vector3Int.zero);
+    private void GenerateWorld(Vector3Int position) {
+
+        WorldGenerationData worldGenerationData = GetPositionsThatPlayerSees(position);
+
+        foreach(Vector3Int pos in worldGenerationData.chunkPositionsToRemove) {
+            WorldDataHelper.RemoveChunk(this, pos);
+        }
+
+        foreach(Vector3Int pos in worldGenerationData.chunkDataToRemove) {
+            WorldDataHelper.RemoveChunkData(this, pos);
+        }
 
         foreach(var pos in worldGenerationData.chunkDataPositionsToCreate) {
             ChunkData data = new ChunkData(chunkSize, chunkHeight, this, pos);
@@ -59,11 +71,14 @@ public class World : MonoBehaviour {
         List<Vector3Int> chunkPositionsToCreate = WorldDataHelper.SelectPositionsToCreate(worldData,allChunkPositionsNeeded,playerPosition);
         List<Vector3Int> chunkDataPositionsToCreate = WorldDataHelper.SelectDataPositionsToCreate(worldData, allChunkDataPositionsNeeded, playerPosition);
 
+        List<Vector3Int> chunkPositionsToRemove = WorldDataHelper.GetUnneededChunks(worldData,allChunkPositionsNeeded);
+        List<Vector3Int> chunkDataToRemove = WorldDataHelper.GetUnneededData(worldData,allChunkDataPositionsNeeded);
+
         WorldGenerationData data = new WorldGenerationData {
             chunkPositionsToCreate = chunkPositionsToCreate,
             chunkDataPositionsToCreate = chunkDataPositionsToCreate,
-            chunkPositionsToRemove = new List<Vector3Int>(),
-            chunkDataToRemove = new List<Vector3Int>()
+            chunkPositionsToRemove = chunkPositionsToRemove,
+            chunkDataToRemove = chunkDataToRemove
         };
         return data;
     }
@@ -83,7 +98,12 @@ public class World : MonoBehaviour {
 
     internal void LoadAdditionalChunksRequest(GameObject player) {
         Debug.Log("Generate new chunks");
+        GenerateWorld(Vector3Int.RoundToInt(player.transform.position));
         OnNewChunksGenerated?.Invoke();
+    }
+
+    internal void RemoveChunk(ChunkRenderer chunk) {
+        chunk.gameObject.SetActive(false);
     }
 
     public struct WorldData {

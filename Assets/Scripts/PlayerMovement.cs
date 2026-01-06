@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private CharacterController controller;
     private Transform camTransform;
-    float speed = 5f;
+    float speed = 4f;
     private Vector3 velocity;
     public float gravity = -19.62f;
     float jumpHeight = 1.2f;
