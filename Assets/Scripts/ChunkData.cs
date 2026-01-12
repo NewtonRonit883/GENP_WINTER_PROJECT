@@ -10,6 +10,7 @@ public class ChunkData
     public int chunkHeight = 128; //Height of chunk 
     public World worldReference; //DIfferent worlds can have different chunk data ex : overworld , nether, end
     public Vector3Int worldPosition; //Position of chunk in world space
+    public TreeData treeData;
 
     public bool modifiedByThePlayer = false;
 

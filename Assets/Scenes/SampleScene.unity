@@ -14,9 +14,9 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
+  m_Fog: 1
+  m_FogColor: {r: 0.8537736, g: 0.8336374, b: 0.8336374, a: 1}
+  m_FogMode: 2
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 4e154bf235e41704bbd6bbc6fd6c63f6, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 38144218}
   - component: {fileID: 38144219}
   - component: {fileID: 38144220}
+  - component: {fileID: 38144221}
   m_Layer: 0
   m_Name: Biome
   m_TagString: Untagged
@@ -223,8 +224,10 @@ MonoBehaviour:
   startLayerHandler: {fileID: 6562510}
   additionalLayerHandlers:
   - {fileID: 1996295039}
+  - {fileID: 1771177055}
   domainWarping: {fileID: 38144220}
   useDomainWarping: 1
+  treeGenerator: {fileID: 38144221}
 --- !u!114 &38144220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +244,20 @@ MonoBehaviour:
   noiseDomainY: {fileID: 11400000, guid: 609ee57af43ac54478a8084423ed9c05, type: 2}
   amplitudeX: 50
   amplitudeY: 50
+--- !u!114 &38144221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38144217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: decb6f3f3e57caf4d9f9626eef650d19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treeNoiseSettings: {fileID: 11400000, guid: 5acd33b8f5364e34abec38125ae072fb, type: 2}
+  domainWarping: {fileID: 38144220}
 --- !u!1 &160790513
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,16 +302,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde4e05d9ce00bf429cd0d1f53860946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSizeInChunks: 10
+  mapSizeInChunks: 30
   chunkSize: 16
   chunkHeight: 128
+  chunkDrawingRange: 5
   chunkPrefab: {fileID: 1150480956889853654, guid: 37fe1561fb2abca4b93a8de067f36748,
     type: 3}
-  chunkDrawingRange: 4
   mapSeedOffset: {x: 0, y: 0}
-  playerTransform: {fileID: 0}
   terrainGenerator: {fileID: 1424867198}
-  RegenTerrainDistance: 30
   OnWorldCreated:
     m_PersistentCalls:
       m_Calls:
@@ -310,7 +325,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnNewChuncksGenerated:
+  OnNewChunksGenerated:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 693310823}
@@ -427,6 +442,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1996295038}
+  - {fileID: 1771177054}
   m_Father: {fileID: 38144218}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &693310821
@@ -473,7 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6da16c4c9b8ba4db8ba315de9c8bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 4459864850019384750, guid: 6bacecc4f3df9584198879c73a6b6c36,
+  playerPrefab: {fileID: 9043510949993729527, guid: 678e7aea58be30c49bad242881ecf772,
     type: 3}
   currentPlayerChunkPosition: {x: 0, y: 0, z: 0}
   world: {fileID: 160790515}
@@ -525,6 +541,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
   undergroundBlockType: 3
+  biomeNoise: {fileID: 11400000, guid: 3f7f2a861c6abf74c87a7587413dd2b3, type: 2}
+  water_Threshold: 30
 --- !u!1 &1075472653
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,7 +844,54 @@ MonoBehaviour:
   Next: {fileID: 717398106}
   surfaceBlockType: 2
   type2: 12
+  biomeNoise: {fileID: 11400000, guid: 3f7f2a861c6abf74c87a7587413dd2b3, type: 2}
   Snow_Threshold: 50
+--- !u!1 &1771177053
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1771177054}
+  - component: {fileID: 1771177055}
+  m_Layer: 0
+  m_Name: TreeLayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1771177054
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771177053}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 627851270}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1771177055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771177053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345bf7e07dcedda4eb292329a6aba095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Next: {fileID: 0}
+  terrainHeightLimit: 70
 --- !u!1 &1807210063
 GameObject:
   m_ObjectHideFlags: 3
