@@ -5,13 +5,13 @@ using System.Linq;
 using UnityEngine;
 
 public static class WorldDataHelper {
-    public static Vector3Int ChunkPositionFromBlockCoords(World world, Vector3Int position) {
+    public static Vector3Int ChunkPositionFromBlockCoords(World world, Vector3Int worldPosition) {
 
         return new Vector3Int {
 
-            x = Mathf.FloorToInt(position.x / (float)world.chunkSize) * world.chunkSize,
-            y = Mathf.FloorToInt(position.y / (float)world.chunkHeight) * world.chunkHeight,
-            z = Mathf.FloorToInt(position.z / (float)world.chunkSize) * world.chunkSize,
+            x = Mathf.FloorToInt(worldPosition.x / (float)world.chunkSize) * world.chunkSize,
+            y = Mathf.FloorToInt(worldPosition.y / (float)world.chunkHeight) * world.chunkHeight,
+            z = Mathf.FloorToInt(worldPosition.z / (float)world.chunkSize) * world.chunkSize,
         };
     }
 
@@ -95,7 +95,25 @@ public static class WorldDataHelper {
         }
     }
 
-    internal static void RemoveChunkData(World world, Vector3Int pos) { 
+    internal static void RemoveChunkData(World world, Vector3Int pos) {
         world.worldData.chunkDataDictionary.Remove(pos);
+    }
+
+    internal static void SetBlock(World worldReference, Vector3Int worldBlockPosition, BlockType blockType) {
+        ChunkData chunkData = GetChunkData(worldReference, worldBlockPosition);
+        if (chunkData != null) {
+            Vector3Int localPosition = Chunk.GetPositionInChunkCoordinates(chunkData, worldBlockPosition);
+            Chunk.SetBlock(chunkData, localPosition, blockType);
+        }
+    }
+
+    public static ChunkData GetChunkData(World worldReference, Vector3Int worldBlockPosition) {
+        Vector3Int chunkPosition = ChunkPositionFromBlockCoords(worldReference, worldBlockPosition);
+
+        ChunkData containerChunk = null;
+
+        worldReference.worldData.chunkDataDictionary.TryGetValue(chunkPosition, out containerChunk);
+
+        return containerChunk;
     }
 }

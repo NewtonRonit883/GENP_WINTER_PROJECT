@@ -52,7 +52,7 @@ public static class Chunk {
             chunkData.blocks[index] = block;
         }
         else {
-            throw new Exception("Need to ask World for appropiate chunk");
+            WorldDataHelper.SetBlock(chunkData.worldReference, localPosition + chunkData.worldPosition, block);
         }
     }
 

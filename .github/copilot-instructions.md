@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, LocalPlayer
 - Active game object:
-  - Name: Virtual Camera
+  - Name: Button
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Profiling;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -48,6 +49,10 @@ public class World : MonoBehaviour {
             ChunkData data = new ChunkData(chunkSize, chunkHeight, this, pos);
             ChunkData newData = terrainGenerator.GenerateChunkData(data, mapSeedOffset);
             worldData.chunkDataDictionary.Add(pos, newData);
+        }
+
+        foreach(var chunkData in worldData.chunkDataDictionary.Values) {
+            AddTreeLeaves(chunkData);
         }
 
         foreach (var pos in worldGenerationData.chunkPositionsToCreate) {
@@ -104,6 +109,12 @@ public class World : MonoBehaviour {
 
     internal void RemoveChunk(ChunkRenderer chunk) {
         chunk.gameObject.SetActive(false);
+    }
+
+    private void AddTreeLeaves(ChunkData chunkData) {
+        foreach (var treeLeaves in chunkData.treeData.treeLeaves) {
+            Chunk.SetBlock(chunkData, treeLeaves, BlockType.TreeLeaves);
+        }
     }
 
     public struct WorldData {

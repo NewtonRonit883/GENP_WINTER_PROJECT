@@ -10,6 +10,8 @@ public class BiomeGenerator : MonoBehaviour
 
     public NoiseSettings biomeNoiseSettings;
 
+    public TreeGenerator treeGenerator;
+
     public DomainWarping domainWarping;
     public bool useDomainWarping = true;
 
@@ -31,11 +33,18 @@ public class BiomeGenerator : MonoBehaviour
         return data;
     }
 
+    internal TreeData GetTreeData(ChunkData data, Vector2Int mapSeedOffset) {
+        if (treeGenerator == null) {
+            return new TreeData();
+        }
+        return treeGenerator.GenerateTreeData(data, mapSeedOffset);
+    }
+
     private int GetSurfaceHeightNoise(int x, int z, int chunkHeight) //it returns surface height in world coordinates
     {
         float terrainHeight;
         if (useDomainWarping) {
-            terrainHeight = domainWarping.GenerateDoaminNoise(x, z, biomeNoiseSettings);
+            terrainHeight = domainWarping.GenerateDomainNoise(x, z, biomeNoiseSettings);
         }
         else {
             terrainHeight = Noise.OctavePerlin(x, z, biomeNoiseSettings);

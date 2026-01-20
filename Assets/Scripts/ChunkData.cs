@@ -12,6 +12,7 @@ public class ChunkData
     public Vector3Int worldPosition; //Position of chunk in world space
 
     public bool modifiedByThePlayer = false;
+    public TreeData treeData;
 
     public ChunkData(int chunkSize, int chunkHeight, World worldReference, Vector3Int worldPosition) //Constructor initializing chunk data
     {

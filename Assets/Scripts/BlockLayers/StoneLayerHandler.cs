@@ -18,7 +18,7 @@ public class StoneLayerHandler : BlockLayerHandler
             return false;
 
         stoneNoiseSettings.worldOffset = mapSeedOffset;
-        float stoneNoise = stoneDoaminWarping.GenerateDoaminNoise(chunkData.worldPosition.x + x, chunkData.worldPosition.z + z, stoneNoiseSettings);
+        float stoneNoise = stoneDoaminWarping.GenerateDomainNoise(chunkData.worldPosition.x + x, chunkData.worldPosition.z + z, stoneNoiseSettings);
 
         int endPosition = surfaceHeightNoise;
         if (chunkData.worldPosition.y < 0)
