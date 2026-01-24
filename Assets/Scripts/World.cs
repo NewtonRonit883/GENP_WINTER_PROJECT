@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Profiling;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -36,6 +35,7 @@ public class World : MonoBehaviour {
     private void GenerateWorld(Vector3Int position) {
 
         WorldGenerationData worldGenerationData = GetPositionsThatPlayerSees(position);
+        terrainGenerator.GenerateBiomePoints(position, chunkDrawingRange,chunkSize,mapSeedOffset);
 
         foreach(Vector3Int pos in worldGenerationData.chunkPositionsToRemove) {
             WorldDataHelper.RemoveChunk(this, pos);

@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class BiomeGenerator : MonoBehaviour
 {
-    public int waterThreshold = 50;
+    public int waterThreshold = 25;
+    public int minWorldLevel = 20; // For desert biome, set this to 25
 
     public NoiseSettings biomeNoiseSettings;
 
@@ -17,7 +18,7 @@ public class BiomeGenerator : MonoBehaviour
 
     public BlockLayerHandler startLayerHandler;
     public List<BlockLayerHandler> additionalLayerHandlers;
-    public ChunkData ProcessChunkColumn(ChunkData data, int x, int z, Vector2Int mapSeedOffset)
+    public ChunkData ProcessChunkColumn(ChunkData data, int x, int z, Vector2Int mapSeedOffset,int? terrainSurfaceNoise)
     {
         biomeNoiseSettings.worldOffset = mapSeedOffset;
         int groundPosition = GetSurfaceHeightNoise(data.worldPosition.x + x, data.worldPosition.z+z, data.chunkHeight);
@@ -40,7 +41,7 @@ public class BiomeGenerator : MonoBehaviour
         return treeGenerator.GenerateTreeData(data, mapSeedOffset);
     }
 
-    private int GetSurfaceHeightNoise(int x, int z, int chunkHeight) //it returns surface height in world coordinates
+    public int GetSurfaceHeightNoise(int x, int z, int chunkHeight) //it returns surface height in world coordinates
     {
         float terrainHeight;
         if (useDomainWarping) {
@@ -50,7 +51,7 @@ public class BiomeGenerator : MonoBehaviour
             terrainHeight = Noise.OctavePerlin(x, z, biomeNoiseSettings);
         }
         terrainHeight = Noise.Redistribution(terrainHeight, biomeNoiseSettings);
-        int surfaceHeight = Noise.RemapValue01ToInt(terrainHeight, 20, chunkHeight);
+        int surfaceHeight = Noise.RemapValue01ToInt(terrainHeight, minWorldLevel, chunkHeight);
         return surfaceHeight;
     }
 

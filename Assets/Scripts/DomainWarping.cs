@@ -18,7 +18,7 @@ public class DomainWarping : MonoBehaviour
         return new Vector2 (noiseX,noiseY);
     }
 
-    public Vector2Int GenerateDoamainOffsetInt(int x, int z) { 
-        return Vector2Int.RoundToInt(GenerateDoamainOffsetInt (x,z));
+    public Vector2Int GenerateDomainOffsetInt(int x, int z) { 
+        return Vector2Int.RoundToInt(GenerateDomainOffset(x,z));
     }
 }
