@@ -35,6 +35,8 @@ public class World : MonoBehaviour {
 
     private void GenerateWorld(Vector3Int position) {
 
+        terrainGenerator.GenerateBiomePoints(position, chunkSize, chunkDrawingRange, mapSeedOffset);
+
         WorldGenerationData worldGenerationData = GetPositionsThatPlayerSees(position);
 
         foreach(Vector3Int pos in worldGenerationData.chunkPositionsToRemove) {
@@ -136,6 +138,7 @@ public class World : MonoBehaviour {
     void Start(){
         //RegenTerrainDistance = mapSizeInChunks*chunkSize/2;
         GenerateWorld(Vector3Int.zero);
+        
         //previousPlayerPosition = playerTransform.position;
 
     }
